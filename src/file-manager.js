@@ -36,12 +36,11 @@ export class FileManager {
         return;
       }
       this.readline.prompt();
-      try {
-        const result = this.processor.process(text);
-        this.readline.output.write(result  + '\n');
-      } catch (err) {
-        this.readline.output.write(err.message + '\n');
-      }
+      this.processor.process(text)
+        .then(
+          res => this.readline.output.write(res  + '\n'),
+          err => this.readline.output.write(err.message + '\n')
+        )
     });
 
     this.readline.on('close', () => {
@@ -51,5 +50,7 @@ export class FileManager {
     });
   };
 
-  formatMsg = (text, username) => `${text}\n`.replace(USERNAME, username);
+  formatMsg(text, username) {
+    return `${text}\n`.replace(USERNAME, username);
+  }
 }

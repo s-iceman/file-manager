@@ -1,4 +1,5 @@
 import * as os from 'node:os';
+
 import { I18N } from './locale.js';
 
 
@@ -13,10 +14,10 @@ export class OperationSystemManager {
     }
   }
 
-  process(option) {
+  async process(option) {
     const processor = this.options[option];
     if (!processor) {
-      throw new Error(I18N.errors.invalidUsernameOption);
+      throw new Error(I18N.errors.invalidInput);
     }
     return processor();
   }

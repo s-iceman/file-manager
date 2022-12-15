@@ -6,8 +6,9 @@ export const I18N = {
     amountCpus: 'Amount of CPUS:',
   },
   errors: {
-    invalidArg: 'Invalid input',
+    invalidInput: 'Invalid input',
     invalidUsernameOption: 'Invalid username option',
     invalidUsernameValue: 'Invalid username value',
+    failed: 'Operation failed',
   }
 };

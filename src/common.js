@@ -6,7 +6,7 @@ const USERNAME_TEMPLATE = '--username=';
 const getUsername = () => {
   const argIdx = 2;
   if (argv.length < argIdx) {
-    throw new Error(I18N.errors.invalidArg);
+    throw new Error(I18N.errors.invalidInput);
   }
 
   const arg = argv[argIdx];
