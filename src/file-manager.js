@@ -1,7 +1,9 @@
 import { getUsername } from './common.js';
 import * as readline from 'node:readline';
 import { I18N } from './locale.js';
-import { CommandProcessor } from './factory.js';
+import { CommandProcessor } from './commands/factory.js';
+import { Storage } from './storage.js';
+
 
 const USERNAME = '${username}';
 const END_OPTIONS = ['.exit',];
@@ -9,20 +11,21 @@ const END_OPTIONS = ['.exit',];
 
 export class FileManager {
   constructor() {
-    this.username = undefined;
+    this.storage = new Storage();
     this.readline = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
       prompt: '>> ',
     });
-    this.processor = new CommandProcessor();
+    this.processor = new CommandProcessor(this.storage);
   }
 
   start() {
     try {
-      this.username = getUsername();
+      const username = getUsername();
+      this.storage.setUsername(username);
       this.readline.output.write(
-        this.formatMsg(I18N.msg.start, this.username)
+        this.formatMsg(I18N.msg.start, username)
       );
     } catch (err) {
       this.readline.output.write(err.message + '\n');
@@ -35,17 +38,27 @@ export class FileManager {
         this.readline.close();
         return;
       }
-      this.readline.prompt();
-      this.processor.process(text)
+      try {
+        this.processor.process(text)
         .then(
-          res => this.readline.output.write(res  + '\n'),
-          err => this.readline.output.write(err.message + '\n')
+          res => { 
+            this.readline.output.write(res  + '\n');
+            this.readline.prompt();
+          },
+          err => {
+            this.readline.output.write(err.message + '\n');
+            this.readline.prompt();
+          }
         )
+      } catch (err) {
+        this.readline.output.write(err.message + '\n');
+        this.readline.prompt();
+      }
     });
 
     this.readline.on('close', () => {
       this.readline.output.write(
-        this.formatMsg(I18N.msg.finish, this.username)
+        this.formatMsg(I18N.msg.finish, this.storage.getUsername())
       );
     });
   };
