@@ -1,6 +1,6 @@
 import * as os from 'node:os';
 
-import { I18N } from '../locale.js';
+import { I18N } from '../text/locale.js';
 
 
 export class OperationSystemManager {

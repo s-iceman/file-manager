@@ -1,7 +1,7 @@
 import { OperationSystemManager } from './os.js';
 import { HashManager } from './hash.js';
 import { DirContentManager } from './navigation.js';
-import { I18N } from '../locale.js';
+import { I18N } from '../text/locale.js';
 
 
 export class CommandProcessor {

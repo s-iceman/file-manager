@@ -1,8 +1,8 @@
-import { getUsername } from './common.js';
 import * as readline from 'node:readline';
-import { I18N } from './locale.js';
+import { I18N } from './text/locale.js';
 import { CommandProcessor } from './commands/factory.js';
-import { Storage } from './storage.js';
+import { Storage } from './common/storage.js';
+import { getUsername } from './common/username-helper.js';
 
 
 const USERNAME = '${username}';

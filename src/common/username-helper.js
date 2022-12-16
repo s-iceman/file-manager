@@ -1,5 +1,5 @@
 import { argv } from 'node:process';
-import { I18N } from './locale.js';
+import { I18N } from '../text/locale.js';
 
 const USERNAME_TEMPLATE = '--username=';
 

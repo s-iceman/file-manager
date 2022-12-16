@@ -1,6 +1,6 @@
 import * as fs from 'node:fs/promises';
 
-import { I18N } from '../locale.js';
+import { I18N } from '../text/locale.js';
 
 
 class DirContentManager {

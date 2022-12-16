@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 
-import { getPath } from '../path-helper.js';
-import { I18N } from '../locale.js';
+import { getPath } from '../common/path-helper.js';
+import { I18N } from '../text/locale.js';
 
 const { createHash } = await import('node:crypto');
 
