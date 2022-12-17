@@ -1,12 +1,12 @@
 import { createReadStream, createWriteStream } from 'node:fs';
 import { createBrotliCompress, constants } from 'node:zlib';
 
-import { BaseZlibManager } from './base.js';
+import { BaseFileSystemManager } from '../fs/base.js';
 import { getPathList, isFileExist } from '../../common/path-helper.js';
 import { I18N } from '../../text/locale.js';
 
 
-export class CompressManager extends BaseZlibManager {
+export class CompressManager extends BaseFileSystemManager {
   async _process(option) {
     const [source, target] = getPathList(option);
     if (!(await isFileExist(source))) {
@@ -20,5 +20,9 @@ export class CompressManager extends BaseZlibManager {
     });
     readStream.pipe(brotli).pipe(writeStream);
     return I18N.msg.compressStatus;
+  }
+
+  _validateOptions(option) {
+    return this._validate(option, 2);
   }
 }

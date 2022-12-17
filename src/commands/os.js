@@ -1,4 +1,4 @@
-import * as os from 'node:os';
+import { cpus, EOL, homedir, arch, userInfo } from 'node:os';
 
 import { I18N } from '../text/locale.js';
 
@@ -23,12 +23,12 @@ export class OperationSystemManager {
   }
 
   _getArchitecture() {
-    return os.arch();
+    return arch();
   }
 
   _getCpus() {
-    const cpus = os.cpus();
-    const res = cpus
+    const myCpus = cpus();
+    const res = myCpus
       .map(e => Object.fromEntries(Object.entries(e)
         .map(e => {
           if (e[0] === 'speed') {
@@ -38,18 +38,18 @@ export class OperationSystemManager {
         })
         .filter(([key]) => ['model', 'speed'].includes(key))));
 
-      return `${I18N.msg.amountCpus} ${cpus.length}\n` + JSON.stringify(res, null, '\t');
+      return `${I18N.msg.amountCpus} ${myCpus.length}\n` + JSON.stringify(res, null, '\t');
   }
 
   _getEOL() {
-    return JSON.stringify(os.EOL);
+    return JSON.stringify(EOL);
   }
 
   _getHomedir() {
-    return os.homedir();
+    return homedir();
   }
 
   _getUsername() {
-    return os.userInfo()['username'];
+    return userInfo()['username'];
   }
 }

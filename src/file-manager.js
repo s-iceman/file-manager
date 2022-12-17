@@ -1,4 +1,4 @@
-import * as readline from 'node:readline';
+import { createInterface } from 'node:readline';
 import { I18N } from './text/locale.js';
 import { CommandProcessor } from './commands/factory.js';
 import { Storage } from './common/storage.js';
@@ -12,7 +12,7 @@ const END_OPTIONS = ['.exit',];
 export class FileManager {
   constructor() {
     this.storage = new Storage();
-    this.readline = readline.createInterface({
+    this.readline = createInterface({
       input: process.stdin,
       output: process.stdout,
       prompt: '>> ',
@@ -61,7 +61,9 @@ export class FileManager {
   }
 
   _printMsg(msg) {
-    this.readline.output.write(`${msg}\n`);
+    if (msg) {
+      this.readline.output.write(`${msg}\n`);
+    }
   }
 
   _printPromptMsg() {

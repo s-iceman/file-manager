@@ -1,7 +1,7 @@
 import { I18N } from '../../text/locale.js';
 
 
-export class BaseZlibManager {
+export class BaseFileSystemManager {
   constructor(storage) {
     this.storage = storage;
   }
@@ -18,15 +18,19 @@ export class BaseZlibManager {
   };
 
   _validateOptions(option) {
+    return this._validate(option);
+  }
+
+  _validate(option, amountOfParts=1) {
     if (!option) {
       return false;
     }
     const spaceCount = (option.match(/\s+/g) || []).length;
-    if (spaceCount <  1) {
+    if (spaceCount < amountOfParts - 1) {
       return false;
     }
-    if (spaceCount > 1) {
-      return (option.match(/[\'\"](\s)+[\'\"]/g) || []).length == 1;
+    if (spaceCount >= amountOfParts) {
+      return (option.match(/[\'\"](\s)+[\'\"]/g) || []).length == amountOfParts;
     }
     return true;
   }

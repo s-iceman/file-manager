@@ -1,4 +1,4 @@
-import * as fs from 'node:fs/promises';
+import { readdir } from 'node:fs/promises';
 
 import { I18N } from '../text/locale.js';
 
@@ -13,13 +13,13 @@ export class DirContentManager {
       throw new Error(I18N.errors.invalidInput);
     }
 
-    const content = await fs.readdir( this.storage.getCurrentDir(), {withFileTypes: true});
+    const content = await readdir( this.storage.getCurrentDir(), {withFileTypes: true});
 
     const [dirs, files] = [[], []];
     content.forEach( e => {
       if (e.isDirectory()) {
         dirs.push(e.name);
-      } else {
+      } else if (e.isFile()) {
         files.push(e.name);
       }
     });
