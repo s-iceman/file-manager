@@ -2,7 +2,7 @@ export const I18N = {
   msg: {
     start: 'Welcome to the File Manager, ${username}!',
     finish: 'Thank you for using File Manager, ${username}, goodbye!',
-    currentPath: 'You are currently in ${path}',
+    currentPath: 'You are currently in',
     amountCpus: 'Amount of CPUS:',
   },
   errors: {

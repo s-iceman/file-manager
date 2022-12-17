@@ -24,13 +24,11 @@ export class FileManager {
     try {
       const username = getUsername();
       this.storage.setUsername(username);
-      this.readline.output.write(
-        this.formatMsg(I18N.msg.start, username)
-      );
+      this._printMsg(this._formatMsg(I18N.msg.start, username));
+      this._printPromptMsg();
     } catch (err) {
-      this.readline.output.write(err.message + '\n');
+      this._printErrorMsg(err.message);
     }
-    this.readline.prompt();
 
     this.readline.on('line', (text) => {
       text = text.toString().trim();
@@ -39,31 +37,41 @@ export class FileManager {
         return;
       }
       try {
-        this.processor.process(text)
-        .then(
+        this.processor.process(text).then(
           res => { 
-            this.readline.output.write(res  + '\n');
-            this.readline.prompt();
+            this._printMsg(res);
+            this._printPromptMsg();
           },
-          err => {
-            this.readline.output.write(err.message + '\n');
-            this.readline.prompt();
-          }
+          err => this._printErrorMsg(err.message)
         )
       } catch (err) {
-        this.readline.output.write(err.message + '\n');
-        this.readline.prompt();
+        this._printErrorMsg(err.message);
       }
     });
 
     this.readline.on('close', () => {
-      this.readline.output.write(
-        this.formatMsg(I18N.msg.finish, this.storage.getUsername())
+      this._printMsg(
+        this._formatMsg(I18N.msg.finish, this.storage.getUsername())
       );
     });
   };
 
-  formatMsg(text, username) {
-    return `${text}\n`.replace(USERNAME, username);
+  _formatMsg(text, username) {
+    return `${text}`.replace(USERNAME, username);
+  }
+
+  _printMsg(msg) {
+    this.readline.output.write(`${msg}\n`);
+  }
+
+  _printPromptMsg() {
+    const msg = `${I18N.msg.currentPath} ${this.storage.getCurrentDir()}`;
+    this._printMsg(msg);
+    this.readline.prompt();
+  }
+
+  _printErrorMsg(msg) {
+    this._printMsg(msg);
+    this._printPromptMsg();
   }
 }

@@ -3,7 +3,7 @@ import * as fs from 'node:fs/promises';
 import { I18N } from '../text/locale.js';
 
 
-class DirContentManager {
+export class DirContentManager {
   constructor(storage) {
     this.storage = storage;
   }
@@ -34,8 +34,4 @@ class DirContentManager {
   _format(value, valueType) {
     return { 'Name': value, 'Type': valueType };
   }
-}
-
-export {
-  DirContentManager,
 }

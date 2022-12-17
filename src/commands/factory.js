@@ -1,6 +1,8 @@
 import { OperationSystemManager } from './os.js';
 import { HashManager } from './hash.js';
-import { DirContentManager } from './navigation.js';
+import { DirContentManager } from './ls.js';
+import { CommandCdManager } from './cd.js';
+import { CommandUpManager } from './up.js';
 import { I18N } from '../text/locale.js';
 
 
@@ -9,11 +11,10 @@ export class CommandProcessor {
     this.osMgr = new OperationSystemManager();
     this.hashMgr = new HashManager();
     this.dirContentMgr = new DirContentManager(storage)
-    this.commands = {
-      'os': this.osMgr,
-      'hash': this.hashMgr,
-      'ls': this.dirContentMgr,
-    }
+    this.commandUpMgr = new CommandUpManager(storage);
+    this.CommandCdManager = new CommandCdManager(storage);
+
+    this.commands = this._createCommands();
   }
 
   process(args) {
@@ -23,6 +24,16 @@ export class CommandProcessor {
     }
     const processor = this.commands[command];
     return processor.process(options);
+  }
+
+  _createCommands() {
+    return {
+      'os': this.osMgr,
+      'hash': this.hashMgr,
+      'ls': this.dirContentMgr,
+      'up': this.commandUpMgr,
+      'cd': this.CommandCdManager,
+    };
   }
 
   _parseArg(args) {
