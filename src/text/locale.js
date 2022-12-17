@@ -4,6 +4,8 @@ export const I18N = {
     finish: 'Thank you for using File Manager, ${username}, goodbye!',
     currentPath: 'You are currently in',
     amountCpus: 'Amount of CPUS:',
+    compressStatus: 'Compressed',
+    decompressStatus: 'Decompressed',
   },
   errors: {
     invalidInput: 'Invalid input',

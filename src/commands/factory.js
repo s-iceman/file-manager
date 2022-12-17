@@ -3,36 +3,42 @@ import { HashManager } from './hash.js';
 import { DirContentManager } from './ls.js';
 import { CommandCdManager } from './cd.js';
 import { CommandUpManager } from './up.js';
+import { CompressManager } from './zlib/compress.js';
+import { DecompressManager } from './zlib/decompress.js';
 import { I18N } from '../text/locale.js';
 
 
 export class CommandProcessor {
   constructor(storage) {
-    this.osMgr = new OperationSystemManager();
-    this.hashMgr = new HashManager();
-    this.dirContentMgr = new DirContentManager(storage)
-    this.commandUpMgr = new CommandUpManager(storage);
-    this.CommandCdManager = new CommandCdManager(storage);
+    this._osMgr = new OperationSystemManager();
+    this._hashMgr = new HashManager();
+    this._dirContentMgr = new DirContentManager(storage)
+    this._commandUpMgr = new CommandUpManager(storage);
+    this._commandCdMgr = new CommandCdManager(storage);
+    this._compressMgr = new CompressManager(storage);
+    this._decompressMgr = new DecompressManager(storage);
 
-    this.commands = this._createCommands();
+    this._commands = this._createCommands();
   }
 
   process(args) {
     const [command, options] = this._parseArg(args);
-    if (this.commands[command] === undefined) {
+    if (this._commands[command] === undefined) {
       throw new Error(I18N.errors.invalidInput);
     }
-    const processor = this.commands[command];
+    const processor = this._commands[command];
     return processor.process(options);
   }
 
   _createCommands() {
     return {
-      'os': this.osMgr,
-      'hash': this.hashMgr,
-      'ls': this.dirContentMgr,
-      'up': this.commandUpMgr,
-      'cd': this.CommandCdManager,
+      'os': this._osMgr,
+      'hash': this._hashMgr,
+      'ls': this._dirContentMgr,
+      'up': this._commandUpMgr,
+      'cd': this._commandCdMgr,
+      'compress': this._compressMgr,
+      'decompress': this._decompressMgr,
     };
   }
 
