@@ -9,6 +9,8 @@ import { CatMgr } from './fs/cat.js';
 import { AddFileMgr } from './fs/add.js';
 import { RemoveFileMgr } from './fs/rm.js';
 import { RenameFileMgr } from './fs/rn.js';
+import { CopyFileMgr } from './fs/cp.js';
+import { MoveFileMgr } from './fs/mv.js';
 import { I18N } from '../text/locale.js';
 
 
@@ -25,6 +27,8 @@ export class CommandProcessor {
     this._addFileMgr = new AddFileMgr(storage);
     this._removeFileMgr = new RemoveFileMgr(storage);
     this._renameFileMgr = new RenameFileMgr(storage);
+    this._copyFileMgr = new CopyFileMgr(storage);
+    this._moveFileMgr = new MoveFileMgr(storage);
 
     this._commands = this._createCommands();
   }
@@ -51,6 +55,8 @@ export class CommandProcessor {
       'add': this._addFileMgr,
       'rm': this._removeFileMgr,
       'rn': this._renameFileMgr,
+      'cp': this._copyFileMgr,
+      'mv': this._moveFileMgr,
     };
   }
 

@@ -12,6 +12,8 @@ export const I18N = {
     fileCreated: 'File is created successfully',
     fileRemoved: 'File is removed successfully',
     fileRenamed: 'File is renamed successfully',
+    fileCopied: 'File is copied successfully',
+    fileMoved: 'File is moved successfully',
   },
 
   errors: {
