@@ -1,0 +1,12 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "description": "Simple file manager",
+  "type": "module",
+  "scripts": {
+    "start": "node src/start.js",
+    "start:n": "node src/start.js --username=User"
+  },
+  "author": "s_iceman",
+  "license": "ISC"
+}
