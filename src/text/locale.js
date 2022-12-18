@@ -19,5 +19,6 @@ export const I18N = {
     invalidUsernameOption: 'Invalid username option',
     invalidUsernameValue: 'Invalid username value',
     failed: 'Operation failed',
+    fileExists: 'Target file exists',
   }
 };

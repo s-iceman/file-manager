@@ -8,7 +8,7 @@ import { I18N } from '../../text/locale.js';
 
 export class CompressManager extends BaseFileSystemManager {
   async _process(option) {
-    const [source, target] = getPathList(option);
+    const [source, target] = getPathList(option, this.storage.getCurrentDir());
     if (!(await isFileExist(source))) {
       throw new Error(I18N.errors.failed);
     }

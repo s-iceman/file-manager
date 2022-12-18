@@ -7,7 +7,7 @@ import { I18N } from '../../text/locale.js';
 
 export class CatMgr extends BaseFileSystemManager {
   async _process(option) {
-    const filePath = getPath(option);
+    const filePath = getPath(option, this.storage.getCurrentDir());
     if (!(await isFileExist(filePath))) {
       throw new Error(I18N.errors.failed);
     }

@@ -15,7 +15,7 @@ import { I18N } from '../text/locale.js';
 export class CommandProcessor {
   constructor(storage) {
     this._osMgr = new OperationSystemManager();
-    this._hashMgr = new HashManager();
+    this._hashMgr = new HashManager(storage);
     this._dirContentMgr = new DirContentManager(storage)
     this._commandUpMgr = new CommandUpManager(storage);
     this._commandCdMgr = new CommandCdManager(storage);

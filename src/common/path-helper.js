@@ -1,31 +1,34 @@
-import { dirname, join, normalize } from 'node:path';
-import { stat, lstat } from 'node:fs/promises'
-import { fileURLToPath } from 'url';
+import { join, isAbsolute } from 'node:path';
+import { lstat } from 'node:fs/promises'
 import { I18N } from '../text/locale.js';
 
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const getPath = (filepath, dir=undefined) => {
+  return isAbsolute(filepath) ? filepath : join(dir, filepath);
+}
 
-const getPath = (filepath, dir) => join(__dirname, filepath);
-
-const getPathList = (option) => {
+const getPathList = (option, dir=undefined) => {
   if (option.indexOf('\'') == -1 && option.indexOf('\"') == -1) {
-    return option.split(/\s+/g).map(e => getPath(e.trim()));
+    return option.split(/\s+/g).map(e => getPath(e.trim(), dir));
   }
   // todo
   return option;
 };
 
-const constructPath = (fileName, sourcePath, isFile=true) => {
-  // todo;
-  if (isFile) {
-
+const parseOption = (option) => {
+  if (option.indexOf('\'') == -1 && option.indexOf('\"') == -1) {
+    return option.split(/\s+/g);
   }
-  return '';
+  // todo
+  return option;
 }
 
 async function isFileExist(path) {
-  return !!(await stat(path).catch(err => false));
+  try {
+    return (await lstat(path)).isFile();
+  } catch(err) {
+    return false;
+  };
 };
 
 async function isDirExist(path) {
@@ -41,5 +44,5 @@ export {
   getPathList,
   isFileExist,
   isDirExist,
-  constructPath,
+  parseOption,
 }
